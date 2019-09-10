@@ -15,6 +15,9 @@ class Game < Gosu::Window
 
   def update
     self.caption = "s: #{Gosu.milliseconds / 1000}"
+
+    # button_down?(Gosu::KB_LEFT)  && @x -= 1
+    # button_down?(Gosu::KB_RIGHT) && @x += 1
   end
 
   def draw
