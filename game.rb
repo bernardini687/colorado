@@ -3,6 +3,7 @@ require 'gosu'
 require_relative 'tiles'
 require_relative 'map'
 require_relative 'square'
+require_relative 'target'
 require_relative 'player'
 
 WIDTH = 800
