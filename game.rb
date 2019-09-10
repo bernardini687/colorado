@@ -2,6 +2,7 @@ require 'gosu'
 
 require_relative 'tiles'
 require_relative 'map'
+require_relative 'square'
 require_relative 'player'
 
 WIDTH = 800
@@ -12,7 +13,7 @@ class Game < Gosu::Window
     super WIDTH, HEIGHT
 
     @map = Map.new 'media/level_0.txt'
-    @sqr = Player.new(@map, WIDTH / 2, HEIGHT - 128)
+    @sqr = Player.new(@map, WIDTH / 2, HEIGHT - 128) # 64 + 32 + 32
 
     @cam_x = @cam_y = 0
   end
@@ -21,8 +22,8 @@ class Game < Gosu::Window
     self.caption = "s: #{Gosu.milliseconds / 1000}; #{info}"
 
     move_x = 0
-    move_x -= 32 if button_down?(Gosu::KB_LEFT)
-    move_x += 32 if button_down?(Gosu::KB_RIGHT)
+    move_x -= @sqr.speed if button_down?(Gosu::KB_LEFT)
+    move_x += @sqr.speed if button_down?(Gosu::KB_RIGHT)
     @sqr.update(move_x)
 
     @cam_x = [[@sqr.x - WIDTH / 2, 0].max, @map.width * 64 - WIDTH].min
@@ -38,7 +39,7 @@ class Game < Gosu::Window
 
   def button_down(key)
     case key
-    # when Gosu::KB_UP then @sqr.try_to_run
+    # when Gosu::KB_UP then @sqr.scan
     when Gosu::KB_ESCAPE then close
     else super
     end
