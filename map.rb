@@ -1,11 +1,13 @@
 class Map
-  attr_reader :width, :height
+  attr_reader :width, :height, :targets
 
   def initialize(level)
     @tileset =
       Gosu::Image.load_tiles(
         'media/tileset.png', Tiles::SIZE, Tiles::SIZE, tileable: true
       )
+
+    @targets = []
 
     lines = File.readlines(level).map(&:chomp)
     @height = lines.size
@@ -18,6 +20,9 @@ class Map
           when 'x' then Tiles::BLACK
           when '^' then Tiles::GREEN
           when '-' then Tiles::WHITE
+          when 'e'
+            @targets << Target.new(self, x * 64 + 32, y * 64 + 32)
+            nil
           end
         end
       end
@@ -30,6 +35,7 @@ class Map
         @tileset[tile].draw(x * Tiles::SIZE, y * Tiles::SIZE, 0) if tile
       end
     end
+    @targets.each(&:draw)
   end
 
   # solid at a given pixel position?
