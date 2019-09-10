@@ -13,20 +13,27 @@ class Game < Gosu::Window
 
     @map = Map.new 'media/level_0.txt'
     @sqr = Player.new(@map, WIDTH / 2, HEIGHT - 256)
+
+    @cam_x = @cam_y = 0
   end
 
   def update
     self.caption = "s: #{Gosu.milliseconds / 1000}; #{info}"
 
     move_x = 0
-    button_down?(Gosu::KB_LEFT)  && move_x -= 4
-    button_down?(Gosu::KB_RIGHT) && move_x += 4
+    button_down?(Gosu::KB_LEFT)  && move_x -= 16
+    button_down?(Gosu::KB_RIGHT) && move_x += 16
     @sqr.update(move_x)
+
+    @cam_x = [[@sqr.x - WIDTH / 2, 0].max, @map.width * 64 - WIDTH].min
+    @cam_y = [[@sqr.y - HEIGHT / 2, 0].max, @map.height * 64 - HEIGHT].min
   end
 
   def draw
-    @map.draw
-    @sqr.draw
+    Gosu.translate(-@cam_x, -@cam_y) do
+      @map.draw
+      @sqr.draw
+    end
   end
 
   def button_down(key)
