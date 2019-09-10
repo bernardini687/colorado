@@ -34,6 +34,6 @@ class Map
 
   # solid at a given pixel position?
   def solid?(x, y)
-    y.negative? || @tiles[x / Tiles::SIZE][y / Tiles::SIZE]
+    @tiles[x / Tiles::SIZE][y / Tiles::SIZE]
   end
 end
