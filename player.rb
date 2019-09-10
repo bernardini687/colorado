@@ -1,12 +1,14 @@
-class Player
-  attr_reader :x, :y
+class Player < Square
+  attr_reader :speed
 
   def initialize(map, x, y)
-    @map = map
-    @x = x
-    @y = y
+    super(map, x, y)
 
-    @img = Gosu::Image.new 'media/hero.png'
+    @speed = 8
+
+    @color.red = 238
+    @color.green = 185
+    @color.blue = 133
   end
 
   def update(move_x)
@@ -14,9 +16,7 @@ class Player
     move_x.negative? && (-move_x).times { @x -= 1 if would_fit?(-1) }
   end
 
-  def draw
-    @img.draw(@x, @y, 1)
-  end
+  private
 
   def would_fit?(offs_x)
     !@map.solid?(@x + offs_x, @y)
