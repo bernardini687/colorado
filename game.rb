@@ -17,7 +17,8 @@ class Game < Gosu::Window
     super WIDTH, HEIGHT
 
     @map = Map.new 'media/level_0.txt'
-    @sqr = Player.new(@map, WIDTH / 2, HEIGHT - 112) # 64 + 32 + 16
+    @sqr = @map.players.sample
+    @squares = @map.players.cycle.each
 
     @cam_x = @cam_y = 0
   end
@@ -43,7 +44,7 @@ class Game < Gosu::Window
 
   def button_down(key)
     case key
-    # when Gosu::KB_UP then @sqr.scan
+    when Gosu::KB_UP then @sqr = @squares.next
     when Gosu::KB_ESCAPE then close
     else super
     end

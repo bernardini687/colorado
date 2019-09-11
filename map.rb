@@ -1,5 +1,5 @@
 class Map
-  attr_reader :width, :height, :targets
+  attr_reader :width, :height, :targets, :players
 
   def initialize(level)
     @tileset =
@@ -8,6 +8,7 @@ class Map
       )
 
     @targets = []
+    @players = []
 
     lines = File.readlines(level).map(&:chomp)
     @height = lines.size
@@ -23,6 +24,9 @@ class Map
           when 'h'
             @targets << Target.new(self, x * 64, y * 64)
             nil
+          when 'c'
+            @players << Player.new(self, x * 64, y * 64 + 48)
+            nil
           end
         end
       end
@@ -36,6 +40,7 @@ class Map
       end
     end
     @targets.each(&:draw)
+    @players.each(&:draw)
   end
 
   # solid at a given pixel position?
