@@ -20,7 +20,6 @@ class Game < Gosu::Window
 
     @map = Map.new 'media/level_0.txt'
     @sqr = @map.players.find(&:known?)
-    @sqrs = @sqr.network.cycle.each
 
     @font = Gosu::Font.new 20
     @cam_x = 0
@@ -48,7 +47,8 @@ class Game < Gosu::Window
   def button_down(key)
     case key
     when Gosu::KB_A then @sqr.action
-    when Gosu::KB_UP then @sqr = @sqrs.next # need to update @sqrs
+    when Gosu::KB_UP then @sqr = @sqr.network.cycle.each.next # not working!
+    # when Gosu::KB_DOWN then @sqr = @sqr.network.cycle.each.prev
     when Gosu::KB_ESCAPE then close
     else super
     end
