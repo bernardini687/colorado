@@ -3,6 +3,5 @@ class Target < Actor
     super(map, x, y)
 
     @img = Gosu::Image.new 'media/target.png'
-    @color = Gosu::Color.rgba(*Skin::COLORS.sample, 255)
   end
 end

@@ -1,4 +1,4 @@
 module Tiles
-  BLACK, GREEN, WHITE = *0..2
+  EMPTY, FIELD, HOUSE = *0..2
   SIZE = 64
 end

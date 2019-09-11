@@ -17,9 +17,9 @@ class Map
       Array.new @width do |x|
         Array.new @height do |y|
           case lines[y][x]
-          when 'x' then Tiles::BLACK
-          when '^' then Tiles::GREEN
-          when '-' then Tiles::WHITE
+          when 'x' then Tiles::EMPTY
+          when '^' then Tiles::FIELD
+          when '-' then Tiles::HOUSE
           when 'h'
             @targets << Target.new(self, x * 64, y * 64)
             nil

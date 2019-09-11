@@ -8,6 +8,6 @@ class Actor
   end
 
   def draw
-    @img.draw(@x, @y, 1, 1, 1, @color, :add)
+    @img.draw(@x, @y, 1)
   end
 end

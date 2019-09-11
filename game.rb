@@ -2,7 +2,6 @@ require 'gosu'
 
 # utility modules
 require_relative 'tiles'
-require_relative 'skin'
 
 # entities
 require_relative 'map'
@@ -18,7 +17,7 @@ class Game < Gosu::Window
     super WIDTH, HEIGHT
 
     @map = Map.new 'media/level_0.txt'
-    @sqr = Player.new(@map, WIDTH / 2, HEIGHT - 128) # 64 + 32 + 32
+    @sqr = Player.new(@map, WIDTH / 2, HEIGHT - 112) # 64 + 32 + 16
 
     @cam_x = @cam_y = 0
   end

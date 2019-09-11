@@ -7,7 +7,6 @@ class Player < Actor
     @speed = 64
 
     @img = Gosu::Image.new 'media/player.png'
-    @color = Gosu::Color.rgba(255, 80, 80, 255)
   end
 
   def update(move_x)
