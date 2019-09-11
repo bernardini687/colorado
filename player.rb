@@ -24,14 +24,20 @@ class Player < Actor
 
   def action
     neighbour = @map.actors.find { |e| e.near?(self) }
-    puts 'nothing' if neighbour.nil?
-    puts 'player!' if neighbour.class == Player
+    puts 'scan!' if neighbour.nil?
+    add_to_network!(neighbour) if neighbour.class == Player
     puts 'target!' if neighbour.class == Target
   end
 
   private
 
+  def add_to_network!(player)
+    return if player.known?
+
+    player.known = true
+  end
+
   def would_fit?(offs_x)
-    !@map.solid?(@x + offs_x, @y)
+    !@map.solid?(x + offs_x, y)
   end
 end
