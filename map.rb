@@ -30,6 +30,8 @@ class Map
           end
         end
       end
+
+    @players.sample.known = true
   end
 
   def draw
@@ -41,6 +43,10 @@ class Map
     end
     @targets.each(&:draw)
     @players.each(&:draw)
+  end
+
+  def network
+    @players.select(&:known?)
   end
 
   # solid at a given pixel position?

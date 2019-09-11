@@ -17,10 +17,11 @@ class Game < Gosu::Window
     super WIDTH, HEIGHT
 
     @map = Map.new 'media/level_0.txt'
-    @sqr = @map.players.sample
-    @squares = @map.players.cycle.each
+    @sqr = @map.players.find(&:known?)
+    @sqrs = @map.network.cycle.each
 
     @cam_x = @cam_y = 0
+    @font = Gosu::Font.new 20
   end
 
   def update
@@ -40,11 +41,13 @@ class Game < Gosu::Window
       @map.draw
       @sqr.draw
     end
+    @font.draw_text("network: #{@map.network.size}", 10, 10, 2)
   end
 
   def button_down(key)
     case key
-    when Gosu::KB_UP then @sqr = @squares.next
+    # when Gosu::KB_A then @sqr.action
+    when Gosu::KB_UP then @sqr = @sqrs.next
     when Gosu::KB_ESCAPE then close
     else super
     end
