@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'gosu'
 
 # utility modules
@@ -20,24 +22,23 @@ class Game < Gosu::Window
     @sqr = @map.players.find(&:known?)
     @sqrs = @map.network.cycle.each
 
-    @cam_x = @cam_y = 0
     @font = Gosu::Font.new 20
+    @cam_x = 0
   end
 
   def update
     self.caption = "s: #{Gosu.milliseconds / 1000}; #{info}"
 
     move_x = 0
-    move_x -= 8 if button_down?(Gosu::KB_LEFT)
-    move_x += 8 if button_down?(Gosu::KB_RIGHT)
+    move_x -= 8 if button_down? Gosu::KB_LEFT
+    move_x += 8 if button_down? Gosu::KB_RIGHT
     @sqr.update(move_x)
 
-    @cam_x = [[@sqr.x - WIDTH / 2, 0].max, @map.width * 64 - WIDTH].min
-    @cam_y = [[@sqr.y - HEIGHT / 2, 0].max, @map.height * 64 - HEIGHT].min
+    @cam_x = [[(@sqr.x - WIDTH / 2), 0].max, (@map.width * 64 - WIDTH)].min
   end
 
   def draw
-    Gosu.translate(-@cam_x, -@cam_y) do
+    Gosu.translate(-@cam_x, 0) do
       @map.draw
       @sqr.draw
     end
@@ -52,6 +53,8 @@ class Game < Gosu::Window
     else super
     end
   end
+
+  private
 
   def info
     "x: #{@sqr.x}, y: #{@sqr.y}"
