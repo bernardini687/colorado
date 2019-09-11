@@ -8,7 +8,7 @@ class Actor
   end
 
   def draw
-    @img.draw(@x, @y, 1)
+    @img.draw(x, y, 1)
   end
 
   def near?(obj)
