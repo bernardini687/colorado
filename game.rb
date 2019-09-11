@@ -47,7 +47,7 @@ class Game < Gosu::Window
 
   def button_down(key)
     case key
-    # when Gosu::KB_A then @sqr.action
+    when Gosu::KB_A then @sqr.action
     when Gosu::KB_UP then @sqr = @sqrs.next # need to update @sqrs
     when Gosu::KB_ESCAPE then close
     else super

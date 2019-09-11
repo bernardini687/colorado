@@ -22,6 +22,13 @@ class Player < Actor
     @map.players.select(&:known?)
   end
 
+  def action
+    neighbour = @map.actors.find { |e| e.near?(self) }
+    puts 'nothing' if neighbour.nil?
+    puts 'player!' if neighbour.class == Player
+    puts 'target!' if neighbour.class == Target
+  end
+
   private
 
   def would_fit?(offs_x)

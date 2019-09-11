@@ -33,18 +33,22 @@ class Map
   end
 
   def draw
-    @height.times do |y|
-      @width.times do |x|
+    height.times do |y|
+      width.times do |x|
         tile = @tiles[x][y]
         tile && @tileset[tile].draw(x * 64, y * 64, 0)
       end
     end
-    @targets.each(&:draw)
-    @players.each(&:draw)
+    targets.each(&:draw)
+    players.each(&:draw)
   end
 
   # solid at a given pixel position?
   def solid?(x, y)
     @tiles[x / 64][y / 64]
+  end
+
+  def actors
+    targets + players
   end
 end
