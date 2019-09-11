@@ -28,8 +28,8 @@ class Game < Gosu::Window
     self.caption = "s: #{Gosu.milliseconds / 1000}; #{info}"
 
     move_x = 0
-    move_x -= @sqr.speed if button_down?(Gosu::KB_LEFT)
-    move_x += @sqr.speed if button_down?(Gosu::KB_RIGHT)
+    move_x -= 8 if button_down?(Gosu::KB_LEFT)
+    move_x += 8 if button_down?(Gosu::KB_RIGHT)
     @sqr.update(move_x)
 
     @cam_x = [[@sqr.x - WIDTH / 2, 0].max, @map.width * 64 - WIDTH].min
