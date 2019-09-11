@@ -20,8 +20,8 @@ class Map
           when 'x' then Tiles::BLACK
           when '^' then Tiles::GREEN
           when '-' then Tiles::WHITE
-          when 'e'
-            @targets << Target.new(self, x * 64 + 32, y * 64 + 32)
+          when 'h'
+            @targets << Target.new(self, x * 64, y * 64)
             nil
           end
         end

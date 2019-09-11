@@ -6,7 +6,6 @@ class Actor
     @x = x
     @y = y
 
-    @img = Gosu::Image.new 'media/square.png'
     @color = Gosu::Color::BLACK.dup
   end
 

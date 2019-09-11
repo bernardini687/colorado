@@ -6,9 +6,9 @@ class Player < Actor
 
     @speed = 8
 
-    @color.red = 238
-    @color.green = 185
-    @color.blue = 133
+    @color.red = random_color
+    @color.green = random_color
+    @color.blue = random_color
   end
 
   def update(move_x)
@@ -17,6 +17,10 @@ class Player < Actor
   end
 
   private
+
+  def random_color
+    [255, 80, 40].sample
+  end
 
   def would_fit?(offs_x)
     !@map.solid?(@x + offs_x, @y)
