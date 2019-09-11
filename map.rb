@@ -3,16 +3,14 @@ class Map
 
   def initialize(level)
     @tileset =
-      Gosu::Image.load_tiles(
-        'media/tileset.png', Tiles::SIZE, Tiles::SIZE, tileable: true
-      )
+      Gosu::Image.load_tiles('media/tileset.png', 64, 64, tileable: true)
 
     @targets = []
     @players = []
 
     lines = File.readlines(level).map(&:chomp)
-    @height = lines.size
     @width = lines.first.size
+    @height = lines.size
 
     @tiles =
       Array.new @width do |x|
@@ -38,7 +36,7 @@ class Map
     @height.times do |y|
       @width.times do |x|
         tile = @tiles[x][y]
-        @tileset[tile].draw(x * Tiles::SIZE, y * Tiles::SIZE, 0) if tile
+        @tileset[tile].draw(x * 64, y * 64, 0) if tile
       end
     end
     @targets.each(&:draw)
@@ -51,6 +49,6 @@ class Map
 
   # solid at a given pixel position?
   def solid?(x, y)
-    @tiles[x / Tiles::SIZE][y / Tiles::SIZE]
+    @tiles[x / 64][y / 64]
   end
 end
