@@ -1,4 +1,4 @@
-class Target < Square
+class Target < Actor
   def initialize(map, x, y)
     super(map, x, y)
 

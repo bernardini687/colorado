@@ -1,4 +1,4 @@
-class Square
+class Actor
   attr_reader :x, :y
 
   def initialize(map, x, y)

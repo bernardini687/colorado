@@ -1,4 +1,4 @@
-class Player < Square
+class Player < Actor
   attr_reader :speed
 
   def initialize(map, x, y)
