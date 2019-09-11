@@ -9,7 +9,7 @@ class Map
     @players = []
 
     lines = File.readlines(level).map(&:chomp)
-    @width = lines.first.size
+    @width = lines[0].size
     @height = lines.size
 
     @tiles =
@@ -36,7 +36,7 @@ class Map
     @height.times do |y|
       @width.times do |x|
         tile = @tiles[x][y]
-        @tileset[tile].draw(x * 64, y * 64, 0) if tile
+        tile && @tileset[tile].draw(x * 64, y * 64, 0)
       end
     end
     @targets.each(&:draw)
