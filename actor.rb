@@ -5,8 +5,6 @@ class Actor
     @map = map
     @x = x
     @y = y
-
-    @color = Gosu::Color::BLACK.dup
   end
 
   def draw

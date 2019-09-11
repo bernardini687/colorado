@@ -4,11 +4,10 @@ class Player < Actor
   def initialize(map, x, y)
     super(map, x, y)
 
-    @speed = 8
+    @speed = 64
 
-    @color.red = random_color
-    @color.green = random_color
-    @color.blue = random_color
+    @img = Gosu::Image.new 'media/player.png'
+    @color = Gosu::Color.rgba(255, 80, 80, 255)
   end
 
   def update(move_x)
@@ -17,10 +16,6 @@ class Player < Actor
   end
 
   private
-
-  def random_color
-    [255, 80, 40].sample
-  end
 
   def would_fit?(offs_x)
     !@map.solid?(@x + offs_x, @y)
