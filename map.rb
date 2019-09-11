@@ -43,10 +43,6 @@ class Map
     @players.each(&:draw)
   end
 
-  def network
-    @players.select(&:known?)
-  end
-
   # solid at a given pixel position?
   def solid?(x, y)
     @tiles[x / 64][y / 64]

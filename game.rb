@@ -20,7 +20,7 @@ class Game < Gosu::Window
 
     @map = Map.new 'media/level_0.txt'
     @sqr = @map.players.find(&:known?)
-    @sqrs = @map.network.cycle.each
+    @sqrs = @sqr.network.cycle.each
 
     @font = Gosu::Font.new 20
     @cam_x = 0
@@ -42,7 +42,7 @@ class Game < Gosu::Window
       @map.draw
       @sqr.draw
     end
-    @font.draw_text("network: #{@map.network.size}", 10, 10, 2)
+    @font.draw_text("network: #{@sqr.network.size}", 10, 10, 2)
   end
 
   def button_down(key)

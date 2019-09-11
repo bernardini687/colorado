@@ -18,6 +18,10 @@ class Player < Actor
     @known
   end
 
+  def network
+    @map.players.select(&:known?)
+  end
+
   private
 
   def would_fit?(offs_x)
