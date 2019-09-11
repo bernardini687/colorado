@@ -1,6 +1,10 @@
 require 'gosu'
 
+# utility modules
 require_relative 'tiles'
+require_relative 'skin'
+
+# entities
 require_relative 'map'
 require_relative 'actor'
 require_relative 'target'
