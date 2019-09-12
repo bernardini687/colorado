@@ -14,7 +14,6 @@ class Actor
   def near?(obj)
     return false if obj == self
 
-    distance = Gosu.distance(x, y, obj.x, obj.y)
-    self.class == Target ? distance < 128 : distance < 64
+    Gosu.distance(x, y, obj.x, obj.y) < 64
   end
 end

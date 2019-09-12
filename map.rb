@@ -23,7 +23,7 @@ class Map
             @targets << Target.new(self, x * 64, y * 64)
             nil
           when 'c'
-            @players << Player.new(self, x * 64, y * 64 + 48)
+            @players << Player.new(self, x * 64, y * 64)
             nil
           end
         end

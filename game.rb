@@ -48,7 +48,7 @@ class Game < Gosu::Window
     case key
     when Gosu::KB_A then @sqr.action
     when Gosu::KB_UP then @sqr = @sqr.network.cycle.each.next # not working!
-    # when Gosu::KB_DOWN then @sqr = @sqr.network.cycle.each.prev
+    # when Gosu::KB_DOWN then @sqr = @sqr.network.cycle.each.prec
     when Gosu::KB_ESCAPE then close
     else super
     end
