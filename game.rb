@@ -20,6 +20,7 @@ class Game < Gosu::Window
 
     @map = Map.new 'media/level_0.txt'
     @sqr = @map.players.find(&:known?)
+    @choice = 0
 
     @font = Gosu::Font.new 20
     @cam_x = 0
@@ -41,20 +42,30 @@ class Game < Gosu::Window
       @map.draw
       @sqr.draw
     end
-    @font.draw_text("network: #{@sqr.network.size}", 10, 10, 2)
+    @font.draw_text("n: #{@sqr.network.size}; c: #{@choice}", 10, 10, 2)
   end
 
   def button_down(key)
     case key
     when Gosu::KB_A then @sqr.action
-    when Gosu::KB_UP then @sqr = @sqr.network.cycle.each.next # not working!
-    # when Gosu::KB_DOWN then @sqr = @sqr.network.cycle.each.prec
+    when Gosu::KB_UP then @sqr = succ
+    when Gosu::KB_DOWN then @sqr = pred
     when Gosu::KB_ESCAPE then close
     else super
     end
   end
 
   private
+
+  def succ
+    @choice += 1 if @choice + 1 < @sqr.network.size
+    @sqr.network[@choice]
+  end
+
+  def pred
+    @choice -= 1 unless @choice.zero?
+    @sqr.network[@choice]
+  end
 
   def info
     "x: #{@sqr.x}, y: #{@sqr.y}"
