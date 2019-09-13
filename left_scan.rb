@@ -1,4 +1,4 @@
-class Scan
+class LeftScan
   RANGE = 1024
 
   def initialize(scanner, data, x, y)
@@ -17,15 +17,15 @@ class Scan
   end
 
   def update(move_x)
-    move_x.positive? && move_x.times do
-      @x += 1 unless reached_limit?
+    move_x.negative? && (-move_x).times do
+      @x -= 1 unless reached_limit?
       @found = true if found_target?
     end
-    move_x.negative? && (-move_x).times { @x -= 1 unless reached_scanner? }
+    move_x.positive? && move_x.times { @x += 1 unless reached_scanner? }
   end
 
   def draw
-    @scanner.rscanning = false if reached_limit? || reached_scanner?
+    @scanner.lscanning = false if reached_limit? || reached_scanner?
     @img.draw(@x, @y, 2)
   end
 
@@ -36,7 +36,7 @@ class Scan
   end
 
   def reached_limit?
-    @x > @scanner.x + RANGE
+    @x < @scanner.x - RANGE
   end
 
   def reached_scanner?
