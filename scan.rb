@@ -1,10 +1,10 @@
 class Scan
-  attr_reader :x, :y
   RANGE = 1024
 
-  def initialize(data, x, y)
+  def initialize(scanner, data, x, y)
+    @scanner = scanner
     @data = data
-    @x = @origin_x = x
+    @x = x
     @y = y
 
     @positive = false
@@ -21,24 +21,25 @@ class Scan
       @x += 1 unless reached_limit?
       @positive = true if found_target?
     end
-    move_x.negative? && (-move_x).times { @x -= 1 unless reached_origin? }
+    move_x.negative? && (-move_x).times { @x -= 1 unless reached_scanner? }
   end
 
   def draw
-    @img.draw(x, y, 2) unless reached_limit? || reached_origin?
+    @scanner.scanning = false if reached_limit? || reached_scanner?
+    @img.draw(@x, @y, 2)
   end
 
   private
 
   def found_target?
-    @data.any? { |target_x| x == target_x }
+    @data.any? { |target_x| @x == target_x }
   end
 
   def reached_limit?
-    x > @origin_x + RANGE
+    @x > @scanner.x + RANGE
   end
 
-  def reached_origin?
-    x == @origin_x
+  def reached_scanner?
+    @x == @scanner.x
   end
 end

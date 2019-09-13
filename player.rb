@@ -1,10 +1,11 @@
 class Player < Actor
-  attr_writer :known
+  attr_writer :known, :scanning
 
   def initialize(map, x, y)
     super(map, x, y)
 
     @known = false
+    @scanning = false
 
     @img = Gosu::Image.new 'media/player.png'
   end
@@ -13,18 +14,22 @@ class Player < Actor
     move_x.positive? && move_x.times    { @x += 1 if would_fit?(32) }
     move_x.negative? && (-move_x).times { @x -= 1 if would_fit?(-1) }
 
-    return unless @scan
+    return unless scanning?
 
     @scan.positive? ? @scan.update(-16) : @scan.update(16)
   end
 
   def draw
     super
-    @scan&.draw
+    @scan.draw if scanning?
   end
 
   def known?
     @known
+  end
+
+  def scanning?
+    @scanning
   end
 
   def network
@@ -37,15 +42,18 @@ class Player < Actor
 
   def action
     neighbour = @map.actors.find { |e| e.near?(self) }
-    scan_for_marked if neighbour.nil?
+    if neighbour.nil? && !scanning?
+      start_scan
+      self.scanning = true
+    end
     add_to_network!(neighbour) if neighbour.class == Player
     mark_the_target! neighbour if neighbour.class == Target
   end
 
   private
 
-  def scan_for_marked
-    @scan = Scan.new(@map.marked_targets_x, x, y + 128)
+  def start_scan
+    @scan = Scan.new(self, @map.marked_targets_x, x, y + 128)
   end
 
   def mark_the_target!(target)

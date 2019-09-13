@@ -62,6 +62,8 @@ class Game < Gosu::Window
 
   # network is sorted by x, select the nearest neighbour to the given direction
   def select_nearest_sqr(to:)
+    return @sqr if @sqr.scanning?
+
     curr_index = @sqr.network.index @sqr
 
     if to == :left
