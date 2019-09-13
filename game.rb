@@ -20,7 +20,6 @@ class Game < Gosu::Window
 
     @map = Map.new 'media/level_0.txt'
     @sqr = @map.players.find(&:known?)
-    @choice = 0
 
     @font = Gosu::Font.new 20
     @cam_x = 0
@@ -42,29 +41,35 @@ class Game < Gosu::Window
       @map.draw
       @sqr.draw
     end
-    @font.draw_text("n: #{@sqr.network.size}; c: #{@choice}", 10, 10, 2)
+    @font.draw_text("network: #{@sqr.network_size}", 10, 10, 2)
   end
 
   def button_down(key)
     case key
+    when Gosu::KB_ESCAPE then close
     when Gosu::KB_A then @sqr.action
     when Gosu::KB_UP then @sqr = succ
     when Gosu::KB_DOWN then @sqr = pred
-    when Gosu::KB_ESCAPE then close
     else super
     end
   end
 
   private
 
+  # network is sorted by x, select the nearest neighbour to the right
   def succ
-    @choice += 1 if @choice + 1 < @sqr.network.size
-    @sqr.network[@choice]
+    curr_index = @sqr.network.index @sqr
+    return @sqr if curr_index + 2 > @sqr.network_size
+
+    @sqr.network[curr_index.succ]
   end
 
+  # select the nearest neighbour to the left
   def pred
-    @choice -= 1 unless @choice.zero?
-    @sqr.network[@choice]
+    curr_index = @sqr.network.index @sqr
+    return @sqr if curr_index.zero?
+
+    @sqr.network[curr_index.pred]
   end
 
   def info
