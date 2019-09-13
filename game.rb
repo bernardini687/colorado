@@ -81,7 +81,7 @@ class Game < Gosu::Window
 
   def counters
     "network: #{@sqr.network_size}\n"\
-    "targets: #{@map.marked_targets_size}"
+    "targets: #{@map.marked_targets.size}"
   end
 end
 

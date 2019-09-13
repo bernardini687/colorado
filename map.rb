@@ -49,11 +49,7 @@ class Map
   end
 
   def marked_targets
-    @targets.select(&:marked?).sort_by(&:x)
-  end
-
-  def marked_targets_size
-    @targets.select(&:marked?).size
+    @targets.select(&:marked?)
   end
 
   private
