@@ -52,6 +52,10 @@ class Map
     @targets.select(&:marked?)
   end
 
+  def marked_targets_x
+    marked_targets.map(&:x)
+  end
+
   private
 
   def cast(actor, x, y)
