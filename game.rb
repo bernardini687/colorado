@@ -4,6 +4,7 @@ require 'gosu'
 
 # utility modules
 require_relative 'tiles'
+require_relative 'keys'
 
 # entities
 require_relative 'map'
@@ -29,8 +30,8 @@ class Game < Gosu::Window
     self.caption = "s: #{Gosu.milliseconds / 1000}; #{info}"
 
     move_x = 0
-    move_x -= 8 if button_down? Gosu::KB_LEFT
-    move_x += 8 if button_down? Gosu::KB_RIGHT
+    move_x -= 8 if Keys.left?
+    move_x += 8 if Keys.right?
     @sqr.update(move_x)
 
     @cam_x = [[(@sqr.x - WIDTH / 2), 0].max, (@map.width * 64 - WIDTH)].min
@@ -47,29 +48,30 @@ class Game < Gosu::Window
   def button_down(key)
     case key
     when Gosu::KB_ESCAPE then close
-    when Gosu::KB_A then @sqr.action
-    when Gosu::KB_UP then @sqr = succ
-    when Gosu::KB_DOWN then @sqr = pred
+    when Gosu::KB_A      then @sqr.action
+    when Gosu::KB_DOWN   then @sqr = select_nearest_sqr to: :left
+    when Gosu::KB_J      then @sqr = select_nearest_sqr to: :left
+    when Gosu::KB_UP     then @sqr = select_nearest_sqr to: :right
+    when Gosu::KB_K      then @sqr = select_nearest_sqr to: :right
     else super
     end
   end
 
   private
 
-  # network is sorted by x, select the nearest neighbour to the right
-  def succ
+  # network is sorted by x, select the nearest neighbour to the given direction
+  def select_nearest_sqr(to:)
     curr_index = @sqr.network.index @sqr
-    return @sqr if curr_index + 2 > @sqr.network_size
 
-    @sqr.network[curr_index.succ]
-  end
+    if to == :left
+      return @sqr if curr_index.zero?
 
-  # select the nearest neighbour to the left
-  def pred
-    curr_index = @sqr.network.index @sqr
-    return @sqr if curr_index.zero?
+      @sqr.network[curr_index.pred]
+    else
+      return @sqr if curr_index + 2 > @sqr.network_size
 
-    @sqr.network[curr_index.pred]
+      @sqr.network[curr_index.succ]
+    end
   end
 
   def info
