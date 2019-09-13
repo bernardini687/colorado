@@ -15,7 +15,7 @@ class Player < Actor
 
     return unless @scan
 
-    @scan.positive? ? @scan.update(-8) : @scan.update(8)
+    @scan.positive? ? @scan.update(-16) : @scan.update(16)
   end
 
   def draw

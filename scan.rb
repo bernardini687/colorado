@@ -1,6 +1,6 @@
 class Scan
   attr_reader :x, :y
-  MAX_DIST = 256
+  RANGE = 1024
 
   def initialize(data, x, y)
     @data = data
@@ -10,7 +10,6 @@ class Scan
     @positive = false
 
     @img = Gosu::Image.new 'media/scan.png'
-    p @data # <<<<<<
   end
 
   def positive?
@@ -36,7 +35,7 @@ class Scan
   end
 
   def reached_limit?
-    x > @origin_x + MAX_DIST
+    x > @origin_x + RANGE
   end
 
   def reached_origin?
