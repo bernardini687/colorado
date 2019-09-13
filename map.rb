@@ -19,12 +19,8 @@ class Map
           when 'x' then Tiles::EMPTY
           when '^' then Tiles::FIELD
           when '-' then Tiles::HOUSE
-          when 'h'
-            @targets << Target.new(self, x * 64, y * 64)
-            nil
-          when 'c'
-            @players << Player.new(self, x * 64, y * 64)
-            nil
+          when 'h' then cast(Target, x, y)
+          when 'c' then cast(Player, x, y)
           end
         end
       end
@@ -49,6 +45,14 @@ class Map
   end
 
   def actors
-    targets + players
+    @actors ||= targets + players
+  end
+
+  private
+
+  def cast(actor, x, y)
+    actors = instance_variable_get("@#{actor.to_s.downcase}s")
+    actors << actor.new(self, x * 64, y * 64)
+    nil
   end
 end
