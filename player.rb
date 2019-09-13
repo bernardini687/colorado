@@ -19,17 +19,25 @@ class Player < Actor
   end
 
   def network
-    @map.players.select(&:known?)
+    @map.players.select(&:known?).sort_by(&:x)
+  end
+
+  def network_size
+    @map.players.select(&:known?).size
   end
 
   def action
     neighbour = @map.actors.find { |e| e.near?(self) }
     puts 'scan!' if neighbour.nil?
     add_to_network!(neighbour) if neighbour.class == Player
-    puts 'target!' if neighbour.class == Target
+    mark_as_target!(neighbour) if neighbour.class == Target
   end
 
   private
+
+  def mark_as_target!(target)
+    puts target
+  end
 
   def add_to_network!(player)
     return if player.known?
