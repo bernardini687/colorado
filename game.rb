@@ -76,7 +76,7 @@ class Game < Gosu::Window
   end
 
   def info
-    "x: #{@sqr.x}, y: #{@sqr.y}"
+    "x: #{@sqr.x}, y: #{@sqr.y}; fps: #{Gosu.fps}"
   end
 
   def counters
