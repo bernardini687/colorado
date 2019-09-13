@@ -1,12 +1,10 @@
 class Player < Actor
   attr_writer :known
-  SCAN_DELAY = 2000
 
   def initialize(map, x, y)
     super(map, x, y)
 
     @known = false
-    @last_scan = 0
 
     @img = Gosu::Image.new 'media/player.png'
   end
@@ -47,9 +45,6 @@ class Player < Actor
   private
 
   def scan_for_marked
-    return if Gosu.milliseconds - @last_scan < SCAN_DELAY
-
-    @last_scan = Gosu.milliseconds
     @scan = Scan.new(@map.marked_targets_x, x, y + 128)
   end
 
