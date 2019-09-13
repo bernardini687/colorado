@@ -1,5 +1,5 @@
 class Map
-  attr_reader :width, :height, :targets, :players
+  attr_reader :width, :height, :players
 
   def initialize(level)
     @tileset =
@@ -35,7 +35,7 @@ class Map
         tile && @tileset[tile].draw(x * 64, y * 64, 0)
       end
     end
-    targets.each(&:draw)
+    @targets.each(&:draw)
     players.each(&:draw)
   end
 
@@ -45,7 +45,15 @@ class Map
   end
 
   def actors
-    @actors ||= targets + players
+    @actors ||= @targets + players
+  end
+
+  def marked_targets
+    @targets.select(&:marked?).sort_by(&:x)
+  end
+
+  def marked_targets_size
+    @targets.select(&:marked?).size
   end
 
   private
