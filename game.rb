@@ -12,7 +12,6 @@ require_relative 'actor'
 require_relative 'target'
 require_relative 'player'
 require_relative 'scan'
-require_relative 'left_scan'
 
 WIDTH = 800
 HEIGHT = 480

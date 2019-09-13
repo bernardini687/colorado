@@ -16,8 +16,8 @@ class Player < Actor
 
     return if no_scanning?
 
-    @lscan.found? ? @lscan.update(16) : @lscan.update(-16)
-    @rscan.found? ? @rscan.update(-16) : @rscan.update(16)
+    @lscan.response? ? @lscan.update(16) : @lscan.update(-16)
+    @rscan.response? ? @rscan.update(-16) : @rscan.update(16)
   end
 
   def draw
@@ -36,11 +36,11 @@ class Player < Actor
     @scanning == [false, false]
   end
 
-  def lscanning=(value)
+  def lscan=(value)
     @scanning[0] = value
   end
 
-  def rscanning=(value)
+  def rscan=(value)
     @scanning[1] = value
   end
 
@@ -66,7 +66,7 @@ class Player < Actor
 
   def start_scan
     @lscan = LeftScan.new(self, @map.marked_targets_x, x, y + 128)
-    @rscan = Scan.new(self, @map.marked_targets_x, x, y + 128)
+    @rscan = RightScan.new(self, @map.marked_targets_x, x, y + 128)
   end
 
   def mark_the_target!(target)
