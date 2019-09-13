@@ -28,7 +28,7 @@ class Game < Gosu::Window
   end
 
   def update
-    self.caption = "s: #{Gosu.milliseconds / 1000}; #{info}"
+    self.caption = "x: #{@sqr.x}, y: #{@sqr.y}; fps: #{Gosu.fps}"
 
     move_x = 0
     move_x -= 8 if Keys.left?
@@ -75,10 +75,6 @@ class Game < Gosu::Window
 
       @sqr.network[curr_index.succ]
     end
-  end
-
-  def info
-    "x: #{@sqr.x}, y: #{@sqr.y}; fps: #{Gosu.fps}"
   end
 
   def counters
