@@ -30,13 +30,15 @@ class Player < Actor
     neighbour = @map.actors.find { |e| e.near?(self) }
     puts 'scan!' if neighbour.nil?
     add_to_network!(neighbour) if neighbour.class == Player
-    mark_as_target!(neighbour) if neighbour.class == Target
+    mark_the_target! neighbour if neighbour.class == Target
   end
 
   private
 
-  def mark_as_target!(target)
-    puts target
+  def mark_the_target!(target)
+    return if target.marked?
+
+    target.marked = true
   end
 
   def add_to_network!(player)

@@ -42,7 +42,7 @@ class Game < Gosu::Window
       @map.draw
       @sqr.draw
     end
-    @font.draw_text("network: #{@sqr.network_size}", 10, 10, 2)
+    @font.draw_text(counters, 10, 10, 2)
   end
 
   def button_down(key)
@@ -76,6 +76,11 @@ class Game < Gosu::Window
 
   def info
     "x: #{@sqr.x}, y: #{@sqr.y}"
+  end
+
+  def counters
+    "network: #{@sqr.network_size}\n"\
+    "targets: #{@map.marked_targets_size}"
   end
 end
 
