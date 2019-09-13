@@ -11,6 +11,7 @@ require_relative 'map'
 require_relative 'actor'
 require_relative 'target'
 require_relative 'player'
+require_relative 'scan'
 
 WIDTH = 800
 HEIGHT = 480
