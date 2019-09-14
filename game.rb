@@ -50,6 +50,7 @@ class Game < Gosu::Window
     case key
     when Gosu::KB_ESCAPE then close
     when Gosu::KB_A      then @sqr.action
+    when Gosu::KB_F      then @sqr.pull_request
     when Gosu::KB_DOWN   then @sqr = select_nearest_sqr to: :left
     when Gosu::KB_J      then @sqr = select_nearest_sqr to: :left
     when Gosu::KB_UP     then @sqr = select_nearest_sqr to: :right

@@ -13,9 +13,17 @@ class Actor
     @img.draw(x, y, 1)
   end
 
-  def near?(obj)
+  def near?(obj, distance)
     return false if obj == self
 
-    Gosu.distance(x, y, obj.x, obj.y) < 64
+    Gosu.distance(x, y, obj.x, obj.y) < distance
+  end
+
+  def target?
+    self.class == Target && marked?
+  end
+
+  def player?
+    self.class == Player && known?
   end
 end

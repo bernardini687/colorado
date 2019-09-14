@@ -54,13 +54,17 @@ class Player < Actor
   end
 
   def action
-    neighbour = @map.actors.find { |e| e.near?(self) }
+    neighbour = @map.actors.find { |a| a.near?(self, 64) }
     if neighbour.nil? && !scanning?
       @scanning = [true, true]
       start_scan
     end
     add_to_network!(neighbour) if neighbour.class == Player
     mark_the_target! neighbour if neighbour.class == Target
+  end
+
+  def pull_request
+    valid_neighbours? && puts('go ahead!')
   end
 
   private
@@ -84,5 +88,11 @@ class Player < Actor
 
   def would_fit?(offs_x)
     !@map.solid?(x + offs_x, y)
+  end
+
+  def valid_neighbours?
+    neighbours = @map.actors.select { |sqr| sqr.near?(self, 256) }
+    neighbours.select(&:target?).size == 1 &&
+      neighbours.select(&:player?).size.positive? # current player doesn't count
   end
 end
