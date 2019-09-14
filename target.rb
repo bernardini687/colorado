@@ -9,6 +9,10 @@ class Target < Actor
     @img = Gosu::Image.new 'media/target.png'
   end
 
+  def draw
+    marked? ? super : @img.draw(x, y, 1, 1, 1, @darker, :add)
+  end
+
   def marked?
     @marked
   end

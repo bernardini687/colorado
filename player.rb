@@ -14,15 +14,16 @@ class Player < Actor
     move_x.positive? && move_x.times    { @x += 1 if would_fit?(32) }
     move_x.negative? && (-move_x).times { @x -= 1 if would_fit?(-1) }
 
-    return if no_scanning?
+    return unless scanning?
 
     @lscan.response? ? @lscan.update(16) : @lscan.update(-16)
     @rscan.response? ? @rscan.update(-16) : @rscan.update(16)
   end
 
   def draw
-    super
-    return if no_scanning?
+    known? ? super : @img.draw(x, y, 1, 1, 1, @darker, :add)
+
+    return unless scanning?
 
     @lscan.draw
     @rscan.draw
@@ -32,8 +33,8 @@ class Player < Actor
     @known
   end
 
-  def no_scanning?
-    @scanning == [false, false]
+  def scanning?
+    @scanning[0] || @scanning[1]
   end
 
   def lscan=(value)
@@ -54,7 +55,7 @@ class Player < Actor
 
   def action
     neighbour = @map.actors.find { |e| e.near?(self) }
-    if neighbour.nil? && no_scanning?
+    if neighbour.nil? && !scanning?
       @scanning = [true, true]
       start_scan
     end

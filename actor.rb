@@ -5,6 +5,8 @@ class Actor
     @map = map
     @x = x
     @y = y
+
+    @darker = Gosu::Color.rgba(255, 255, 255, 159)
   end
 
   def draw

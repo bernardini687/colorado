@@ -31,8 +31,8 @@ class Game < Gosu::Window
     self.caption = "x: #{@sqr.x}, y: #{@sqr.y}; fps: #{Gosu.fps}"
 
     move_x = 0
-    move_x -= 8 if Keys.left? && @sqr.no_scanning?
-    move_x += 8 if Keys.right? && @sqr.no_scanning?
+    move_x -= 8 if Keys.left? && !@sqr.scanning?
+    move_x += 8 if Keys.right? && !@sqr.scanning?
     @sqr.update(move_x)
 
     @cam_x = [[(@sqr.x - WIDTH / 2), 0].max, (@map.width * 64 - WIDTH)].min
@@ -62,7 +62,7 @@ class Game < Gosu::Window
 
   # network is sorted by x, select the nearest neighbour to the given direction
   def select_nearest_sqr(to:)
-    return @sqr unless @sqr.no_scanning?
+    return @sqr if @sqr.scanning?
 
     curr_index = @sqr.network.index @sqr
 
