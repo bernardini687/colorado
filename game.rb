@@ -1,3 +1,5 @@
+require_relative 'game_actions'
+
 class Game < Gosu::Window
   WIDTH = 800
   HEIGHT = 480
@@ -30,40 +32,11 @@ class Game < Gosu::Window
       @world.draw
       @cat.draw
     end
-    @font.draw_text(counters, 10, 10, 2)
+    @font.draw_text(
+      "network: #{@cat.network_size}\nmarks: #{@world.marks.size}",
+      10, 10, 2
+    )
   end
 
-  def button_down(key)
-    case key
-    when Gosu::KB_ESCAPE then close
-    when Gosu::KB_A      then @cat.action
-    when Gosu::KB_F      then @cat.pull_request
-    when Gosu::KB_DOWN   then @cat = next_cat to: :left
-    when Gosu::KB_J      then @cat = next_cat to: :left
-    when Gosu::KB_UP     then @cat = next_cat to: :right
-    when Gosu::KB_K      then @cat = next_cat to: :right
-    else super
-    end
-  end
-
-  private
-
-  # network is sorted by x axis
-  # select the nearest neighbour to the given direction
-  def next_cat(to:)
-    return @cat if @cat.scanning?
-
-    current = @cat.network.index @cat
-
-    if to == :left
-      current.zero?                   ? @cat : @cat.network[current.pred]
-    else
-      current + 2 > @cat.network_size ? @cat : @cat.network[current.succ]
-    end
-  end
-
-  def counters
-    "network: #{@cat.network_size}\n"\
-    "marks: #{@world.marks.size}"
-  end
+  include GameActions
 end
