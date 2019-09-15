@@ -1,5 +1,5 @@
-require_relative 'cat_utils'
 require_relative 'cat_actions'
+require_relative 'cat_utils'
 
 class Cat < Actor
   attr_writer :known
@@ -33,6 +33,6 @@ class Cat < Actor
     @rscan.draw
   end
 
-  include CatUtils
   include CatActions
+  include CatUtils
 end

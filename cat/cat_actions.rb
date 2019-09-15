@@ -11,7 +11,7 @@ module CatActions
 
   def abduction_request
     msg = valid_neighbours? ? 'go ahead!' : 'not there yet!'
-    puts msg
+    puts msg # <<<<<<
   end
 
   private
