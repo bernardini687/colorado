@@ -4,7 +4,7 @@ require 'gosu'
 
 # utility modules
 require_relative 'tiles'
-require_relative 'keys'
+require_relative 'input'
 
 # entities
 require_relative 'world'

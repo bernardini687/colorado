@@ -1,4 +1,4 @@
-module Keys
+module Input
   def self.left?
     Gosu.button_down?(Gosu::KB_LEFT) || Gosu.button_down?(Gosu::KB_H)
   end
