@@ -1,3 +1,5 @@
+require_relative 'actor_utils'
+
 class Actor
   attr_reader :x, :y
 
@@ -13,17 +15,5 @@ class Actor
     @img.draw(x, y, 1)
   end
 
-  def near?(obj, distance)
-    return false if obj == self
-
-    Gosu.distance(x, y, obj.x, obj.y) < distance
-  end
-
-  def marked_human?
-    self.class == Human && marked?
-  end
-
-  def known_cat?
-    self.class == Cat && known?
-  end
+  include ActorUtils
 end

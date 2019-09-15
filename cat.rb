@@ -55,12 +55,11 @@ class Cat < Actor
 
   def action
     neighbour = @world.actors.find { |a| a.near?(self, 64) }
-    if neighbour.nil? && !scanning?
-      @scanning = [true, true]
-      start_scan
+    case neighbour
+    when NilClass then start_scan
+    when Human    then mark! neighbour
+    when Cat      then know! neighbour
     end
-    know!(neighbour) if neighbour.class == Cat
-    mark!(neighbour) if neighbour.class == Human
   end
 
   def pull_request
@@ -70,6 +69,9 @@ class Cat < Actor
   private
 
   def start_scan
+    return if scanning?
+
+    @scanning = [true, true]
     @lscan = LeftScan.new(self, @world.marks_x, x, y + 128)
     @rscan = RightScan.new(self, @world.marks_x, x, y + 128)
   end

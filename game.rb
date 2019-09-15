@@ -1,22 +1,7 @@
-# frozen_string_literal: true
-
-require 'gosu'
-
-# utility modules
-require_relative 'tiles'
-require_relative 'keys'
-
-# entities
-require_relative 'world'
-require_relative 'actor'
-require_relative 'human'
-require_relative 'cat'
-require_relative 'scan'
-
-WIDTH = 800
-HEIGHT = 480
-
 class Game < Gosu::Window
+  WIDTH = 800
+  HEIGHT = 480
+
   def initialize
     super WIDTH, HEIGHT
 
@@ -83,5 +68,3 @@ class Game < Gosu::Window
     "marks: #{@world.marks.size}"
   end
 end
-
-Game.new.show
