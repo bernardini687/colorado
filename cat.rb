@@ -1,4 +1,4 @@
-class Player < Actor
+class Cat < Actor
   attr_writer :known
 
   def initialize(map, x, y)
@@ -7,7 +7,7 @@ class Player < Actor
     @known = false
     @scanning = [false, false]
 
-    @img = Gosu::Image.new 'media/player.png'
+    @img = Gosu::Image.new 'media/cat.png'
   end
 
   def update(move_x)
@@ -46,11 +46,11 @@ class Player < Actor
   end
 
   def network
-    @map.players.select(&:known?).sort_by(&:x)
+    @map.cats.select(&:known?).sort_by(&:x)
   end
 
   def network_size
-    @map.players.select(&:known?).size
+    @map.cats.select(&:known?).size
   end
 
   def action
@@ -59,8 +59,8 @@ class Player < Actor
       @scanning = [true, true]
       start_scan
     end
-    add_to_network!(neighbour) if neighbour.class == Player
-    mark_the_target! neighbour if neighbour.class == Target
+    know!(neighbour) if neighbour.class == Cat
+    mark!(neighbour) if neighbour.class == Human
   end
 
   def pull_request
@@ -70,20 +70,20 @@ class Player < Actor
   private
 
   def start_scan
-    @lscan = LeftScan.new(self, @map.marked_targets_x, x, y + 128)
-    @rscan = RightScan.new(self, @map.marked_targets_x, x, y + 128)
+    @lscan = LeftScan.new(self, @map.marks_x, x, y + 128)
+    @rscan = RightScan.new(self, @map.marks_x, x, y + 128)
   end
 
-  def mark_the_target!(target)
-    return if target.marked?
+  def mark!(human)
+    return if human.marked?
 
-    target.marked = true
+    human.marked = true
   end
 
-  def add_to_network!(player)
-    return if player.known?
+  def know!(cat)
+    return if cat.known?
 
-    player.known = true
+    cat.known = true
   end
 
   def would_fit?(offs_x)
@@ -92,7 +92,7 @@ class Player < Actor
 
   def valid_neighbours?
     neighbours = @map.actors.select { |sqr| sqr.near?(self, 256) }
-    neighbours.select(&:target?).size == 1 &&
-      neighbours.select(&:player?).size.positive? # current player doesn't count
+    neighbours.select(&:marked_human?).size == 1 &&
+      neighbours.select(&:known_cat?).size.positive? # current cat doesn't count
   end
 end

@@ -1,4 +1,4 @@
-class Target < Actor
+class Human < Actor
   attr_writer :marked
 
   def initialize(map, x, y)
@@ -6,7 +6,7 @@ class Target < Actor
 
     @marked = false
 
-    @img = Gosu::Image.new 'media/target.png'
+    @img = Gosu::Image.new 'media/human.png'
   end
 
   def draw

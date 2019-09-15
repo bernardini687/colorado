@@ -1,12 +1,12 @@
 class Map
-  attr_reader :width, :height, :players
+  attr_reader :width, :height, :cats
 
   def initialize(level)
     @tileset =
       Gosu::Image.load_tiles('media/tileset.png', 64, 64, tileable: true)
 
-    @targets = []
-    @players = []
+    @humans = []
+    @cats = []
 
     lines = File.readlines(level).map(&:chomp)
     @width = lines[0].size
@@ -19,13 +19,13 @@ class Map
           when 'x' then Tiles::EMPTY
           when '^' then Tiles::FIELD
           when '-' then Tiles::HOUSE
-          when 'h' then cast(Target, x, y)
-          when 'c' then cast(Player, x, y)
+          when 'h' then cast(Human, x, y)
+          when 'c' then cast(Cat, x, y)
           end
         end
       end
 
-    @players.sample.known = true
+    @cats.sample.known = true
   end
 
   def draw
@@ -35,8 +35,8 @@ class Map
         tile && @tileset[tile].draw(x * 64, y * 64, 0)
       end
     end
-    @targets.each(&:draw)
-    players.each(&:draw)
+    @humans.each(&:draw)
+    cats.each(&:draw)
   end
 
   # solid at a given pixel position?
@@ -45,15 +45,15 @@ class Map
   end
 
   def actors
-    @actors ||= @targets + players
+    @actors ||= @humans + cats
   end
 
-  def marked_targets
-    @targets.select(&:marked?)
+  def marks
+    @humans.select(&:marked?)
   end
 
-  def marked_targets_x
-    marked_targets.map(&:x)
+  def marks_x
+    marks.map(&:x)
   end
 
   private

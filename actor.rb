@@ -19,11 +19,11 @@ class Actor
     Gosu.distance(x, y, obj.x, obj.y) < distance
   end
 
-  def target?
-    self.class == Target && marked?
+  def marked_human?
+    self.class == Human && marked?
   end
 
-  def player?
-    self.class == Player && known?
+  def known_cat?
+    self.class == Cat && known?
   end
 end

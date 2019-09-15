@@ -7,7 +7,7 @@ class RightScan < BaseScan
     # move foreword to the right
     move_x.positive? && move_x.times do
       @x += 1 unless reached_limit?
-      @response = true if found_target?
+      @response = true if found_human?
     end
     # go back left
     move_x.negative? && (-move_x).times { @x -= 1 unless reached_origin? }

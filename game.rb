@@ -9,8 +9,8 @@ require_relative 'keys'
 # entities
 require_relative 'map'
 require_relative 'actor'
-require_relative 'target'
-require_relative 'player'
+require_relative 'human'
+require_relative 'cat'
 require_relative 'scan'
 
 WIDTH = 800
@@ -21,27 +21,27 @@ class Game < Gosu::Window
     super WIDTH, HEIGHT
 
     @map = Map.new 'media/level_0.txt'
-    @sqr = @map.players.find(&:known?)
+    @cat = @map.cats.find(&:known?)
 
     @font = Gosu::Font.new 20
     @cam_x = 0
   end
 
   def update
-    self.caption = "x: #{@sqr.x}, y: #{@sqr.y}; fps: #{Gosu.fps}"
+    self.caption = "x: #{@cat.x}, y: #{@cat.y}; fps: #{Gosu.fps}"
 
     move_x = 0
-    move_x -= 8 if Keys.left? && !@sqr.scanning?
-    move_x += 8 if Keys.right? && !@sqr.scanning?
-    @sqr.update(move_x)
+    move_x -= 8 if Keys.left? && !@cat.scanning?
+    move_x += 8 if Keys.right? && !@cat.scanning?
+    @cat.update(move_x)
 
-    @cam_x = [[(@sqr.x - WIDTH / 2), 0].max, (@map.width * 64 - WIDTH)].min
+    @cam_x = [[(@cat.x - WIDTH / 2), 0].max, (@map.width * 64 - WIDTH)].min
   end
 
   def draw
     Gosu.translate(-@cam_x, 0) do
       @map.draw
-      @sqr.draw
+      @cat.draw
     end
     @font.draw_text(counters, 10, 10, 2)
   end
@@ -49,12 +49,12 @@ class Game < Gosu::Window
   def button_down(key)
     case key
     when Gosu::KB_ESCAPE then close
-    when Gosu::KB_A      then @sqr.action
-    when Gosu::KB_F      then @sqr.pull_request
-    when Gosu::KB_DOWN   then @sqr = select_nearest_sqr to: :left
-    when Gosu::KB_J      then @sqr = select_nearest_sqr to: :left
-    when Gosu::KB_UP     then @sqr = select_nearest_sqr to: :right
-    when Gosu::KB_K      then @sqr = select_nearest_sqr to: :right
+    when Gosu::KB_A      then @cat.action
+    when Gosu::KB_F      then @cat.pull_request
+    when Gosu::KB_DOWN   then @cat = select_nearest_cat to: :left
+    when Gosu::KB_J      then @cat = select_nearest_cat to: :left
+    when Gosu::KB_UP     then @cat = select_nearest_cat to: :right
+    when Gosu::KB_K      then @cat = select_nearest_cat to: :right
     else super
     end
   end
@@ -62,25 +62,25 @@ class Game < Gosu::Window
   private
 
   # network is sorted by x, select the nearest neighbour to the given direction
-  def select_nearest_sqr(to:)
-    return @sqr if @sqr.scanning?
+  def select_nearest_cat(to:)
+    return @cat if @cat.scanning?
 
-    curr_index = @sqr.network.index @sqr
+    curr_index = @cat.network.index @cat
 
     if to == :left
-      return @sqr if curr_index.zero?
+      return @cat if curr_index.zero?
 
-      @sqr.network[curr_index.pred]
+      @cat.network[curr_index.pred]
     else
-      return @sqr if curr_index + 2 > @sqr.network_size
+      return @cat if curr_index + 2 > @cat.network_size
 
-      @sqr.network[curr_index.succ]
+      @cat.network[curr_index.succ]
     end
   end
 
   def counters
-    "network: #{@sqr.network_size}\n"\
-    "targets: #{@map.marked_targets.size}"
+    "network: #{@cat.network_size}\n"\
+    "marks: #{@map.marks.size}"
   end
 end
 

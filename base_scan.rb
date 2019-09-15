@@ -20,8 +20,8 @@ class BaseScan
     @response
   end
 
-  def found_target?
-    @data.any? { |target_x| @x == target_x }
+  def found_human?
+    @data.any? { |human_x| @x == human_x }
   end
 
   def reached_origin?
