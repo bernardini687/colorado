@@ -1,6 +1,7 @@
 module CatActions
   def dispatch_action
-    neighbour = @world.actors.find { |a| a.near?(self, 64) }
+    neighbour = find_neighbour
+
     case neighbour
     when NilClass then start_scan
     when Human    then mark! neighbour

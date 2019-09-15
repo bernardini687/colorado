@@ -1,7 +1,7 @@
 require_relative 'world_utils'
 
 class World
-  attr_reader :width, :height, :cats
+  attr_reader :width, :height, :humans, :cats
 
   def initialize(level)
     @tileset =
@@ -37,8 +37,6 @@ class World
         tile && @tileset[tile].draw(x * 64, y * 64, 0)
       end
     end
-    @humans.each(&:draw)
-    cats.each(&:draw)
   end
 
   include WorldUtils

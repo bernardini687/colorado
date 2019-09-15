@@ -6,11 +6,8 @@ class Human < Actor
 
     @marked = false
 
-    @img = Gosu::Image.new 'media/human.png'
-  end
-
-  def draw
-    marked? ? super : @img.draw(x, y, 1, 1, 1, @darker, :add)
+    @img  = Gosu::Image.new 'media/human.png'
+    @glow = Gosu::Image.new 'media/glowing_human.png'
   end
 
   def marked?

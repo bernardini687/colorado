@@ -7,12 +7,14 @@ class Actor
     @world = world
     @x = x
     @y = y
-
-    @darker = Gosu::Color.rgba(255, 255, 255, 159)
   end
 
   def draw
     @img.draw(x, y, 1)
+  end
+
+  def glow
+    @glow.draw(x, y, 2)
   end
 
   include ActorUtils

@@ -22,6 +22,7 @@ class Game < Gosu::Window
     move_x -= 8 if Input.left?  && !@cat.scanning?
     move_x += 8 if Input.right? && !@cat.scanning?
     @cat.update(move_x)
+    @neighbour = @cat.find_neighbour
 
     # camera follows
     @cam_x = [[(@cat.x - WIDTH / 2), 0].max, (@world.width * 64 - WIDTH)].min
@@ -30,12 +31,21 @@ class Game < Gosu::Window
   def draw
     Gosu.translate(-@cam_x, 0) do
       @world.draw
-      @cat.draw
+      @world.actors.reject { |a| [@cat, @neighbour].include? a }.each(&:draw)
+      if @cat.special_action?
+        @cat.glow
+        @neighbour.glow
+      else
+        @cat.draw
+        @neighbour&.draw
+      end
     end
-    @font.draw_text(
-      "network: #{@cat.network_size}\nmarks: #{@world.marks.size}",
-      10, 10, 2
-    )
+    @font.draw_text(counters, 10, 10, 2)
+  end
+
+  def counters
+    "network: #{@cat.network_size}\n"\
+    "marks: #{@world.marks.size}"
   end
 
   include GameActions

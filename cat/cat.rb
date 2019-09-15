@@ -10,7 +10,8 @@ class Cat < Actor
     @known = false
     @scanning = [false, false]
 
-    @img = Gosu::Image.new 'media/cat.png'
+    @img  = Gosu::Image.new 'media/cat.png'
+    @glow = Gosu::Image.new 'media/glowing_cat.png'
   end
 
   def update(move_x)
@@ -24,7 +25,7 @@ class Cat < Actor
   end
 
   def draw
-    known? ? super : @img.draw(x, y, 1, 1, 1, @darker, :add)
+    super
 
     return unless scanning?
 

@@ -1,5 +1,5 @@
 module ActorUtils
-  def near?(actor, distance)
+  def near?(actor, distance = 64)
     return false if actor == self # only care for other actors
 
     Gosu.distance(x, y, actor.x, actor.y) < distance
