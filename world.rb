@@ -1,4 +1,4 @@
-class Map
+class World
   attr_reader :width, :height, :cats
 
   def initialize(level)

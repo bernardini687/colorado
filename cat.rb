@@ -1,8 +1,8 @@
 class Cat < Actor
   attr_writer :known
 
-  def initialize(map, x, y)
-    super(map, x, y)
+  def initialize(world, x, y)
+    super(world, x, y)
 
     @known = false
     @scanning = [false, false]
@@ -46,15 +46,15 @@ class Cat < Actor
   end
 
   def network
-    @map.cats.select(&:known?).sort_by(&:x)
+    @world.cats.select(&:known?).sort_by(&:x)
   end
 
   def network_size
-    @map.cats.select(&:known?).size
+    @world.cats.select(&:known?).size
   end
 
   def action
-    neighbour = @map.actors.find { |a| a.near?(self, 64) }
+    neighbour = @world.actors.find { |a| a.near?(self, 64) }
     if neighbour.nil? && !scanning?
       @scanning = [true, true]
       start_scan
@@ -70,8 +70,8 @@ class Cat < Actor
   private
 
   def start_scan
-    @lscan = LeftScan.new(self, @map.marks_x, x, y + 128)
-    @rscan = RightScan.new(self, @map.marks_x, x, y + 128)
+    @lscan = LeftScan.new(self, @world.marks_x, x, y + 128)
+    @rscan = RightScan.new(self, @world.marks_x, x, y + 128)
   end
 
   def mark!(human)
@@ -87,11 +87,11 @@ class Cat < Actor
   end
 
   def would_fit?(offs_x)
-    !@map.solid?(x + offs_x, y)
+    !@world.solid?(x + offs_x, y)
   end
 
   def valid_neighbours?
-    neighbours = @map.actors.select { |sqr| sqr.near?(self, 256) }
+    neighbours = @world.actors.select { |sqr| sqr.near?(self, 256) }
     neighbours.select(&:marked_human?).size == 1 &&
       neighbours.select(&:known_cat?).size.positive? # current cat doesn't count
   end

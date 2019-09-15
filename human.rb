@@ -1,8 +1,8 @@
 class Human < Actor
   attr_writer :marked
 
-  def initialize(map, x, y)
-    super(map, x, y)
+  def initialize(world, x, y)
+    super(world, x, y)
 
     @marked = false
 

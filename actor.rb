@@ -1,8 +1,8 @@
 class Actor
   attr_reader :x, :y
 
-  def initialize(map, x, y)
-    @map = map
+  def initialize(world, x, y)
+    @world = world
     @x = x
     @y = y
 

@@ -7,7 +7,7 @@ require_relative 'tiles'
 require_relative 'keys'
 
 # entities
-require_relative 'map'
+require_relative 'world'
 require_relative 'actor'
 require_relative 'human'
 require_relative 'cat'
@@ -20,8 +20,8 @@ class Game < Gosu::Window
   def initialize
     super WIDTH, HEIGHT
 
-    @map = Map.new 'media/level_0.txt'
-    @cat = @map.cats.find(&:known?)
+    @world = World.new 'media/level_0.txt'
+    @cat = @world.cats.find(&:known?)
 
     @font = Gosu::Font.new 20
     @cam_x = 0
@@ -35,12 +35,12 @@ class Game < Gosu::Window
     move_x += 8 if Keys.right? && !@cat.scanning?
     @cat.update(move_x)
 
-    @cam_x = [[(@cat.x - WIDTH / 2), 0].max, (@map.width * 64 - WIDTH)].min
+    @cam_x = [[(@cat.x - WIDTH / 2), 0].max, (@world.width * 64 - WIDTH)].min
   end
 
   def draw
     Gosu.translate(-@cam_x, 0) do
-      @map.draw
+      @world.draw
       @cat.draw
     end
     @font.draw_text(counters, 10, 10, 2)
@@ -80,7 +80,7 @@ class Game < Gosu::Window
 
   def counters
     "network: #{@cat.network_size}\n"\
-    "marks: #{@map.marks.size}"
+    "marks: #{@world.marks.size}"
   end
 end
 
