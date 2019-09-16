@@ -5,7 +5,7 @@ module WorldUtils
   end
 
   def actors
-    @actors ||= @humans + cats
+    @actors = @humans + cats
   end
 
   def marks

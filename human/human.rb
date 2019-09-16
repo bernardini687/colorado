@@ -21,4 +21,8 @@ class Human < Actor
   def seen?
     @seen
   end
+
+  def abduct!
+    @world.humans.reject! { |human| human == self }
+  end
 end

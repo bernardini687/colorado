@@ -14,11 +14,6 @@ module GameUtils
       @neighbours.select(&:known_cat?).size.positive? # don't count current cat
   end
 
-  def counters
-    "network: #{@cat.network_size}\n"\
-    "marks: #{@world.marks.size}"
-  end
-
   def filtered_actors
     if @actionable
       @world.actors - [@cat, @neighbour]
@@ -27,5 +22,11 @@ module GameUtils
     else
       @world.actors.reject { |actor| actor == @cat }
     end
+  end
+
+  def counters
+    "network: #{@cat.network_size}\n"\
+    "marks: #{@world.marks.size}"\
+    "/#{@world.humans.size}"
   end
 end
