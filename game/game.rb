@@ -25,6 +25,7 @@ class Game < Gosu::Window
     @cat.update(move_x)
 
     @neighbour = @cat.find_neighbour
+    @world.humans.each(&:update)
 
     # camera follows
     @cam_x = [[(@cat.x - WIDTH / 2), 0].max, (@world.width * 64 - WIDTH)].min

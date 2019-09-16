@@ -1,7 +1,6 @@
 module CatActions
   def dispatch_action
     neighbour = find_neighbour
-
     case neighbour
     when NilClass then start_scan
     when Human    then mark! neighbour
@@ -10,8 +9,13 @@ module CatActions
   end
 
   def abduction_request
-    msg = valid_neighbours? ? 'go ahead!' : 'not there yet!'
-    puts msg # <<<<<<
+    if valid_neighbours?
+      msg = 'go ahead!'
+      target = find_target
+    else
+      msg = 'not there yet!'
+    end
+    p msg, target&.seen? # <<<<<<
   end
 
   private

@@ -36,6 +36,14 @@ module CatUtils
     @world.actors.find { |a| a.near? self }
   end
 
+  def find_neighbours
+    @world.actors.select { |a| a.near?(self, 256) }
+  end
+
+  def find_target
+    find_neighbours.find(&:marked_human?)
+  end
+
   private
 
   def would_fit?(offs_x)
@@ -43,8 +51,7 @@ module CatUtils
   end
 
   def valid_neighbours?
-    neighbours = @world.actors.select { |a| a.near?(self, 256) }
-
+    neighbours = find_neighbours
     neighbours.select(&:marked_human?).size == 1 &&
       neighbours.select(&:known_cat?).size.positive? # current cat doesn't count
   end

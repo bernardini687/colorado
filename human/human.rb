@@ -10,7 +10,15 @@ class Human < Actor
     @glow = Gosu::Image.new 'media/glowing_human.png'
   end
 
+  def update
+    @seen = @world.humans.any? { |human| human.near?(self, 1024) }
+  end
+
   def marked?
     @marked
+  end
+
+  def seen?
+    @seen
   end
 end
