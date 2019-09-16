@@ -24,8 +24,12 @@ class Game < Gosu::Window
     move_x += 8 if Input.right? && !@cat.scanning?
     @cat.update(move_x)
 
-    @neighbour = @cat.find_neighbour
     @world.humans.each(&:update)
+
+    @neighbour  = @cat.find_neighbour
+    @neighbours = @cat.find_neighbours
+    @actionable = action?
+    @abductable = valid_neighbours?
 
     # camera follows
     @cam_x = [[(@cat.x - WIDTH / 2), 0].max, (@world.width * 64 - WIDTH)].min
@@ -35,18 +39,20 @@ class Game < Gosu::Window
     @font.draw_text(counters, 10, 10, 2)
 
     Gosu.translate(-@cam_x, 0) do
-      filtered_actors.each(&:draw)
       @world.draw
-      if @cat.special_action?
+      filtered_actors.each(&:draw)
+      if @actionable
         @neighbour.glow
         @cat.glow
+      elsif @abductable
+        @neighbours.each(&:glow)
+        @cat.glow
       else
-        @neighbour&.draw
         @cat.draw
       end
     end
   end
 
-  include GameUtils
   include GameActions
+  include GameUtils
 end

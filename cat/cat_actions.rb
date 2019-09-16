@@ -9,13 +9,7 @@ module CatActions
   end
 
   def abduction_request
-    if valid_neighbours?
-      msg = 'go ahead!'
-      target = find_target
-    else
-      msg = 'not there yet!'
-    end
-    p msg, target&.seen? # <<<<<<
+    puts find_target&.seen? # <<<<<<
   end
 
   private

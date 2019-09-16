@@ -26,7 +26,15 @@ class Cat < Actor
 
   def draw
     super
+    draw_scan
+  end
 
+  def glow
+    super
+    draw_scan
+  end
+
+  def draw_scan
     return unless scanning?
 
     @lscan.draw

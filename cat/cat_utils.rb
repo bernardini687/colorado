@@ -15,13 +15,6 @@ module CatUtils
     @scanning[1] = value
   end
 
-  def special_action?
-    neighbour = find_neighbour
-    return false unless neighbour
-
-    !(neighbour.marked_human? || neighbour.known_cat?)
-  end
-
   # public filters
 
   def network
@@ -48,11 +41,5 @@ module CatUtils
 
   def would_fit?(offs_x)
     !@world.solid?(x + offs_x, y)
-  end
-
-  def valid_neighbours?
-    neighbours = find_neighbours
-    neighbours.select(&:marked_human?).size == 1 &&
-      neighbours.select(&:known_cat?).size.positive? # current cat doesn't count
   end
 end
