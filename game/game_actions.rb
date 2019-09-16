@@ -3,7 +3,7 @@ module GameActions
     case key
     when Gosu::KB_ESCAPE then close
     when Gosu::KB_A      then @cat.dispatch_action
-    when Gosu::KB_F      then @cat.abduction_request
+    when Gosu::KB_F      then @cat.abduction_request if @abductable
     when Gosu::KB_DOWN   then @cat = next_cat to: :left
     when Gosu::KB_J      then @cat = next_cat to: :left
     when Gosu::KB_UP     then @cat = next_cat to: :right

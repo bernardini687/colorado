@@ -10,9 +10,8 @@ module CatActions
 
   def abduction_request
     target = find_target
-    if target.nil?
-      puts 'no marked human within range!'
-    elsif target.seen?
+
+    if target.seen?
       puts "you've been spotted!"
     else
       puts 'trying to abduct!'

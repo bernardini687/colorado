@@ -23,6 +23,7 @@ class Human < Actor
   end
 
   def abduct!
+    # introduce timer here?
     @world.humans.reject! { |human| human == self }
   end
 end
