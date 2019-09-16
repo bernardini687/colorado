@@ -8,6 +8,7 @@ require_relative 'input'
 
 # entities
 require_relative 'world/world'
+require_relative 'countdown'
 require_relative 'actor/actor'
 require_relative 'human/human'
 require_relative 'cat/cat'

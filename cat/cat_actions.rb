@@ -12,10 +12,10 @@ module CatActions
     target = find_target
 
     if target.seen?
-      puts "you've been spotted!"
+      puts "you've been spotted!" # <<<<<<
     else
-      puts 'trying to abduct!'
-      target.abduct!
+      puts 'sending request...'   # <<<<<<
+      target.start_countdown
     end
   end
 

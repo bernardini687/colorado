@@ -31,12 +31,30 @@ class Game < Gosu::Window
     @actionable = action?
     @abductable = valid_neighbours?
 
+    @countdown = @cat.find_target&.countdown if @abductable
+
+    if @countdown
+      @countdown.update
+      return puts 'game over!' if @countdown.target.seen? # <<<<<<
+
+      unless @abductable
+        @countdown.target.reset!
+        return @countdown = nil
+      end
+
+      if @countdown.ended?
+        @countdown.target.abduct!
+        @countdown = nil
+      end
+    end
+
     # camera follows
     @cam_x = [[(@cat.x - WIDTH / 2), 0].max, (@world.width * 64 - WIDTH)].min
   end
 
   def draw
     @font.draw_text(counters, 10, 10, 2)
+    @font.draw_text(@countdown.log, 200, 10, 2) if @countdown
 
     Gosu.translate(-@cam_x, 0) do
       @world.draw
